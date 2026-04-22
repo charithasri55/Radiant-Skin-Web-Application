@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Shopping Cart</title>
+<style>
+* {
+	font-family: Arial, sans-serif;
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 20px;
+	background: linear-gradient(to right, #e0f7fa, #f9fbe7);
+	min-height: 100vh;
+}
+
+.cart-container {
+	max-width: 10000px;
+	margin: 0 auto;
+	background: white;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.cart-header {
+	font-size: 24px;
+	margin-bottom: 20px;
+	padding-bottom: 10px;
+	border-bottom: 1px solid #eee;
+}
+
+.cart-item {
+	display: flex;
+	padding: 15px 0;
+	border-bottom: 1px solid #eee;
+	align-items: center;
+}
+
+.cart-item-image {
+	width: 80px;
+	height: 80px;
+	object-fit: cover;
+	border-radius: 4px;
+	margin-right: 20px;
+}
+
+.cart-item-details {
+	flex-grow: 1;
+}
+
+.cart-item-title {
+	font-weight: bold;
+	margin-bottom: 5px;
+}
+
+.cart-item-price {
+	color: #28a745;
+	font-weight: bold;
+}
+
+.remove-item {
+	background: none;
+	border: none;
+	color: #dc3545;
+	cursor: pointer;
+	font-size: 14px;
+	padding: 5px 10px;
+}
+
+.remove-item:hover {
+	text-decoration: underline;
+}
+
+.cart-summary {
+	margin-top: 20px;
+	padding-top: 20px;
+	border-top: 1px solid #eee;
+	text-align: right;
+}
+
+.total-price {
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
+.checkout-btn {
+	background-color: #28a745;
+	color: white;
+	border: none;
+	padding: 12px 25px;
+	font-size: 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s;
+}
+
+.checkout-btn:hover {
+	background-color: #218838;
+}
+
+.empty-cart {
+	text-align: center;
+	padding: 40px 0;
+	color: #6c757d;
+}
+
+.continue-shopping {
+	display: block;
+	text-align: center;
+	margin-top: 20px;
+	color: #007bff;
+	text-decoration: none;
+}
+
+.continue-shopping:hover {
+	text-decoration: underline;
+}
+
+.quantity-controls {
+	display: flex;
+	align-items: center;
+	margin-top: 8px;
+}
+
+.quantity-btn {
+	width: 30px;
+	height: 30px;
+	background-color: #f1f1f1;
+	border: none;
+	border-radius: 4px;
+	font-size: 16px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.quantity-btn:hover {
+	background-color: #e1e1e1;
+}
+
+.quantity-value {
+	margin: 0 10px;
+	min-width: 20px;
+	text-align: center;
+}
+
+.item-total {
+	margin-left: 20px;
+	font-weight: bold;
+	color: #333;
+}
+
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 30px;
+	background-color: black;
+	color: white;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+.navbar-left {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.icon {
+	width: 35px;
+	height: 35px;
+}
+
+.logo {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.menu {
+	display: flex;
+	align-items: center;
+}
+
+.menu a {
+	color: white;
+	text-decoration: none;
+	margin: 0 15px;
+	font-size: 18px;
+	transition: 0.3s;
+}
+
+.menu a:hover {
+	color: gray;
+}
+
+.dropdown {
+	position: relative;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #333;
+	min-width: 160px;
+	right: 0;
+	border-radius: 5px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	z-index: 10;
+}
+
+.dropdown-content a {
+	color: white;
+	padding: 10px 16px;
+	display: block;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.dropdown-content a:hover {
+	background-color: #555;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.section {
+	padding: 60px 30px;
+	text-align: center;
+}
+
+.skincare-title {
+	font-size: 3.5rem;
+	font-weight: bold;
+	background: black;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+	<!-- Navbar -->
+	<div class="navbar">
+		<div class="navbar-left">
+			<img src="Images/face-cream.png" alt="App Icon" class="icon">
+			<div class="logo">Radiant Skin</div>
+		</div>
+		<div class="menu">
+			<a href="products.html">Products</a> <a href="LoginPage.html">Login</a>
+			<div class="dropdown">
+				<a href="#dashboard">Dashboard</a>
+				<div class="dropdown-content">
+					<a href="Homepage.html">Home</a> <a href="Profile.html">Profile</a>
+					<a href="cart.html">My Cart</a> <a href="myorders.html">My
+						Orders</a>
+					<!-- UPDATED: logout now calls the servlet -->
+					<a href="logout">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="cart-container">
+		<div class="cart-header">Your Shopping Cart</div>
+		<div id="cart-items-container">
+			<!-- Cart items will be inserted here by JavaScript -->
+		</div>
+		<div class="cart-summary">
+			<div class="total-price">
+				Total: Rs.<span id="total-price">0</span>
+			</div>
+			<button class="checkout-btn" id="checkout-btn">Proceed to
+				Checkout</button>
+		</div>
+		<a href="products.html" class="continue-shopping">← Continue
+			Shopping</a>
+	</div>
+
+	<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const cartItemsContainer = document.getElementById('cart-items-container');
+        const totalPriceElement = document.getElementById('total-price');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function renderCart() {
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart">
+                        Your cart is empty. Continue shopping to add items.
+                    </div>
+                `;
+                checkoutBtn.style.display = 'none';
+                totalPriceElement.textContent = '0';
+                localStorage.setItem('cart', JSON.stringify(cart));
+                return;
+            }
+            
+            let html = '';
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                if (typeof item.quantity === 'undefined') {
+                    item.quantity = 1;
+                }
+                
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                
+                html += `
+                    <div class="cart-item" data-id="${item.id}">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div class="cart-item-price">Rs.${item.price.toFixed(2)}</div>
+                            <div class="quantity-controls">
+                                <button class="quantity-btn" onclick="changeQuantity(${index}, -1)">-</button>
+                                <span class="quantity-value">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="changeQuantity(${index}, 1)">+</button>
+                            </div>
+                        </div>
+                        <div class="item-total">Rs.${itemTotal.toFixed(2)}</div>
+                        <button class="remove-item" onclick="removeItem(${index})">Remove</button>
+                    </div>
+                `;
+            });
+            
+            cartItemsContainer.innerHTML = html;
+            totalPriceElement.textContent = total.toFixed(2);
+            checkoutBtn.style.display = 'inline-block';
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        
+        window.changeQuantity = function(index, change) {
+            if (index >= 0 && index < cart.length) {
+                const newQuantity = cart[index].quantity + change;
+                
+                if (newQuantity < 1) {
+                    removeItem(index);
+                    return;
+                }
+                
+                cart[index].quantity = newQuantity;
+                renderCart();
+            }
+        }
+        
+        window.removeItem = function(index) {
+            if (index >= 0 && index < cart.length) {
+                const removedProductId = cart[index].id;
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                
+                const event = new CustomEvent('productRemoved', { 
+                    detail: { productId: removedProductId } 
+                });
+                window.dispatchEvent(event);
+                
+                renderCart();
+            }
+        }
+        
+        checkoutBtn.addEventListener('click', function() {
+            if (cart.length > 0) {
+                window.location.href = 'Payment.html';
+            }
+        });
+        
+        renderCart();
+        
+        window.addEventListener('storage', function(event) {
+            if (event.key === 'cart') {
+                cart = JSON.parse(event.newValue) || [];
+                renderCart();
+            }
+        });
+    });
+    
+    </script>
+</body>
+</html>

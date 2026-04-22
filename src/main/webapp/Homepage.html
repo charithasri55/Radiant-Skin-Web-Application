@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Radiant Skin</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	scroll-behavior: smooth;
+	background-image: url('Images/backgroundSkinCare.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	position: relative;
+}
+
+body::before {
+	content: "";
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(255, 255, 255, 0.8);
+	z-index: -1;
+}
+
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 30px;
+	background-color: black;
+	color: white;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+.navbar-left {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.icon {
+	width: 35px;
+	height: 35px;
+}
+
+.logo {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.menu {
+	display: flex;
+	align-items: center;
+}
+
+.menu a {
+	color: white;
+	text-decoration: none;
+	margin: 0 15px;
+	font-size: 18px;
+	transition: 0.3s;
+}
+
+.menu a:hover {
+	color: gray;
+}
+
+.dropdown {
+	position: relative;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #333;
+	min-width: 160px;
+	right: 0;
+	border-radius: 5px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	z-index: 10;
+}
+
+.dropdown-content a {
+	color: white;
+	padding: 10px 16px;
+	display: block;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.dropdown-content a:hover {
+	background-color: #555;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.section {
+	padding: 60px 30px;
+	text-align: center;
+}
+
+.skincare-title {
+	font-size: 3.5rem;
+	font-weight: bold;
+	background: black;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	margin-bottom: 10px;
+}
+
+.description {
+	font-size: 18px;
+	line-height: 1.6;
+	max-width: 900px;
+	margin: 0 auto 30px;
+	text-align: center;
+}
+
+.dashboard-buttons {
+	display: flex;
+	justify-content: center;
+	gap: 20px;
+	margin-top: 20px;
+	flex-wrap: wrap;
+}
+
+.dashboard-buttons button {
+	padding: 15px 25px;
+	font-size: 18px;
+	border: none;
+	cursor: pointer;
+	border-radius: 8px;
+	background-color: black;
+	color: white;
+	transition: 0.3s;
+}
+
+.dashboard-buttons button:hover {
+	background-color: #444;
+}
+
+.product-scroll {
+	display: flex;
+	overflow-x: auto;
+	padding: 20px 0;
+	gap: 20px;
+	scrollbar-width: thin;
+	scrollbar-color: #888 transparent;
+}
+
+.product-scroll::-webkit-scrollbar {
+	height: 8px;
+}
+
+.product-scroll::-webkit-scrollbar-thumb {
+	background-color: #888;
+	border-radius: 4px;
+}
+
+.product-scroll::-webkit-scrollbar-track {
+	background: transparent;
+}
+
+.product-link {
+	flex: 0 0 auto;
+	width: 220px;
+	height: 280px;
+	display: block;
+	border-radius: 10px;
+	overflow: hidden;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	transition: transform 0.3s;
+}
+
+.product-link:hover {
+	transform: scale(1.05);
+}
+
+.product-link img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.reviews {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 20px;
+	margin-top: 30px;
+}
+
+.review-card {
+	background-color: #fff;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	width: 280px;
+	text-align: left;
+}
+
+.review-card h3 {
+	font-size: 18px;
+	margin-bottom: 10px;
+	color: #333;
+}
+
+.review-card p {
+	font-size: 16px;
+	color: #555;
+	line-height: 1.5;
+}
+
+.contact {
+	background-color: #333;
+	color: white;
+	padding: 40px 20px;
+}
+
+.contact h2 {
+	margin-bottom: 10px;
+}
+
+.contact p {
+	margin: 5px 0;
+	font-size: 16px;
+}
+
+@media ( max-width : 768px) {
+	.skincare-title {
+		font-size: 2rem;
+	}
+	.description {
+		padding: 0 10px;
+	}
+	.dashboard-buttons button {
+		width: 90%;
+	}
+}
+</style>
+</head>
+<body>
+
+	<!-- Navbar -->
+	<div class="navbar">
+		<div class="navbar-left">
+			<img src="Images/face-cream.png" alt="App Icon" class="icon">
+			<div class="logo">Radiant Skin</div>
+		</div>
+		<div class="menu">
+			<a href="products.html">Products</a> <a href="LoginPage.html">Login</a>
+			<div class="dropdown">
+				<a href="#dashboard">Dashboard</a>
+				<div class="dropdown-content">
+					<a href="Profile.html">Profile</a> <a href="cart.html">My Cart</a>
+					<a href="myorders.html">My Orders</a>
+					<!-- UPDATED: logout now calls the servlet -->
+					<a href="logout">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Overview -->
+	<div class="section" id="overview">
+		<h1 class="skincare-title">Welcome to Radiant Skin</h1>
+		<br>
+		<p class="description">Our personalized skincare web application
+			analyzes user inputs, including skin type, concerns, and lifestyle
+			factors, to provide tailored skincare solutions. It generates
+			customized skincare routines, recommends suitable products based on
+			individual compatibility, and offers a supportive community for
+			expert advice and shared experiences. With advanced technology, a
+			user-friendly interface, and seamless data integration, our platform
+			ensures a smarter, more effective approach to skincare. Start your
+			journey to healthier, glowing skin today. In addition to personalized
+			routines, the platform uses AI-driven diagnostics to track skin
+			progress over time, adjusts recommendations based on seasonal or
+			hormonal changes, and integrates with wearable health devices for a
+			holistic view of your skincare needs. Users can access educational
+			resources, receive reminders for product application, and participate
+			in live skincare consultations or forums moderated by dermatologists.
+			Whether you're dealing with acne, dryness, aging, or sensitivity, our
+			solution adapts continuously to deliver results that evolve with your
+			skin.</p>
+		<div class="dashboard-buttons">
+			<button onclick="navigatetoHomePage()">Register Now</button>
+		</div>
+	</div>
+
+	<!-- Personalized Skincare -->
+	<div class="section" id="personalized-skincare"
+		style="padding: 60px 10%; text-align: left;">
+		<div
+			style="display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 45px;">
+			<div style="flex: 1; min-width: 280px; max-width: 400px;">
+				<img src="Images/skin-care.png" alt="Personalized Skincare"
+					style="width: 100%; border-radius: 15px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);" />
+			</div>
+			<div style="flex: 1; min-width: 280px; max-width: 800px;">
+				<h2 class="skincare-title" style="text-align: left;">Personalized
+					Skincare</h2>
+				<p class="description" style="text-align: left; margin-top: 20px;">
+					Skincare is not one-size-fits-all — your skin is as unique as your
+					fingerprint. That’s why we offer a personalized skincare experience
+					that starts with understanding you. By analyzing your skin type,
+					age, environment, daily habits, and concerns like acne, dryness,
+					pigmentation, or sensitivity, we craft a customized routine just
+					for you. <br> <br> Our intelligent system leverages
+					dermatological insights and product compatibility algorithms to
+					recommend cleansers, moisturizers, sunscreens, and treatments that
+					suit your specific needs. Whether you're dealing with oily T-zones,
+					combination skin, or hormonal breakouts, we ensure each product in
+					your routine works in harmony with your skin.
+				</p>
+				<div style="margin-top: 30px; text-align: center;">
+					<button onclick="navigateToKnowAboutSkin()"
+						style="padding: 14px 28px; font-size: 18px; background-color: black; color: white; border: none; border-radius: 8px; cursor: pointer;">
+						Know Your Skin Type</button>
+					<button onclick="navigateToPersonalizedSkincare()"
+						style="padding: 14px 28px; font-size: 18px; background-color: black; color: white; border: none; border-radius: 8px; cursor: pointer;">
+						Start Personalized Routine</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Products -->
+	<div class="section" id="products">
+		<h2 class="skincare-title">Best Sellers</h2>
+		<div class="product-scroll">
+			<a href="cetaphilcleanser.html" class="product-link"><img
+				src="Images/cetaphil_cleanser.jpg" alt="Cetaphil"></a> <a
+				href="Simplecleanser.html" class="product-link"><img
+				src="Images/simple_cleanser.jpg" alt="Simple"></a> <a
+				href="minimalistcleanser.html" class="product-link"><img
+				src="https://images-static.nykaa.com/media/catalog/product/8/1/81fedc4MINIM00000019.jpeg"
+				alt="Minimalist"></a> <a href="DeconstructCleanser.html"
+				class="product-link"><img
+				src="https://m.media-amazon.com/images/I/410eexj-kZL.jpg"
+				alt="Deconstruct"></a> <a href="CeraveCleanser.html"
+				class="product-link"><img
+				src="https://www.cerave.com/-/media/project/loreal/brand-sites/cerave/americas/us/skincare/cleansers/hydrating-facial-cleanser/photos/2022/700x700/cerave_daily_hydrating-cleanser_12oz_front-700x700-v2.jpg?rev=8dcf681b75c042deaaa0c6ea1581d4df"
+				alt="CeraVe"></a> <a href="DotKeyWatermelon.html"
+				class="product-link"> <img
+				src="https://images-static.nykaa.com/media/catalog/product/c/a/ca542d5DOTKE00000147_googleq.jpg?tr=w-500"
+				alt="Night Repair Cream">
+			</a>
+		</div>
+	</div>
+
+	<!-- Reviews -->
+	<div class="section" id="reviews">
+		<h2 class="skincare-title">Reviews</h2>
+		<br>
+		<div class="reviews">
+			<div class="review-card">
+				<h3>Ananya - 🌟🌟🌟🌟🌟</h3>
+				<p>"Radiant Skin transformed my skincare routine. The
+					recommendations were spot on!"</p>
+			</div>
+			<div class="review-card">
+				<h3>Rohan - 🌟🌟🌟🌟</h3>
+				<p>"I love the clean UI and the personalized suggestions. Would
+					love a dark mode!"</p>
+			</div>
+			<div class="review-card">
+				<h3>Ayesha - 🌟🌟🌟</h3>
+				<p>"Good app but needs faster loading times. Otherwise, product
+					matches are accurate."</p>
+			</div>
+		</div>
+	</div>
+
+	<!-- Contact -->
+	<div class="contact" id="contact">
+		<h2>Contact Us</h2>
+		<p>Email: support@radiantskin.com</p>
+		<p>Phone: +91 98765 43210</p>
+		<p>Address: 12 Skin Glow Lane, Guntur City, India</p>
+	</div>
+
+	<script>
+		function navigateToPersonalizedSkincare() {
+			window.location.href = "UserInfo.html";
+		}
+		function navigatetoHomePage() {
+			window.location.href = "reg.html";
+		}
+		function navigateToKnowAboutSkin() {
+			window.location.href = "knowaboutskin.html";
+		}
+	</script>
+</body>
+</html>

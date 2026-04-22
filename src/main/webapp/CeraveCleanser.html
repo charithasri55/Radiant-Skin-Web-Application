@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CeraVe Cleanser</title>
+<style>
+* {
+	font-family: Arial, sans-serif;
+}
+
+body {
+	margin: 0;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background: linear-gradient(to right, #e0f7fa, #f9fbe7);
+	min-height: 100vh;
+}
+
+.product-layout {
+	display: flex;
+	width: 100%;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 0px;
+}
+
+.product-image {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: left-top;
+	padding: 10px;
+}
+
+.product-image img {
+	width: 70%;
+	border-radius: 10px;
+}
+
+.product-details {
+	flex: 1;
+	text-align: left;
+	padding: 20px;
+	align-self: flex-start;
+}
+
+.product-title {
+	font-size: 22px;
+	font-weight: bold;
+	margin: 10px 0;
+}
+
+.product-description {
+	font-size: 14px;
+	line-height: 1.5;
+	color: #333;
+	margin: 15px 0;
+}
+
+.dropdown-header {
+	font-size: 16px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+
+.dropdown-arrow {
+	margin-left: 8px;
+	font-size: 12px;
+	transition: transform 0.3s ease;
+}
+
+.dropdown-header.active .dropdown-arrow {
+	transform: rotate(180deg);
+}
+
+.description-points {
+	padding-left: 20px;
+	margin: 0;
+}
+
+.description-points li {
+	margin-bottom: 8px;
+	list-style-type: disc;
+}
+
+.ingredients {
+	margin-top: 15px;
+	font-size: 14px;
+	color: #000;
+}
+
+.ingredient-table-container {
+	display: none;
+	margin-top: 10px;
+}
+
+.ingredient-table {
+	width: 100%;
+	border-collapse: collapse;
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	margin: 10px 0;
+}
+
+.ingredient-table th {
+	background-color: #f2f2f2;
+	padding: 12px 15px;
+	text-align: left;
+	font-weight: bold;
+	border-bottom: 2px solid #ddd;
+	font-size: 14px;
+}
+
+.ingredient-table td {
+	padding: 10px 15px;
+	border-bottom: 1px solid #ddd;
+	font-size: 14px;
+}
+
+.ingredient-table tr:hover {
+	background-color: #f9f9f9;
+}
+
+.yes {
+	color: #28a745;
+	font-weight: bold;
+}
+
+.no {
+	color: #dc3545;
+	font-weight: bold;
+}
+
+.buttons {
+	margin-top: 15px;
+	display: flex;
+	gap: 10px;
+}
+
+.buttons button {
+	flex: 1;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.add-to-cart {
+	background-color: #ffcc00;
+	color: #000;
+}
+
+.buy-now {
+	background-color: #ff5733;
+	color: #fff;
+}
+
+.product-price {
+	color: #28a745;
+	font-size: 1.5em;
+	margin: 5px 0;
+}
+
+hr {
+	margin: 15px 0;
+	border: 0;
+	height: 1px;
+	background-color: #ddd;
+}
+
+.about-item-points {
+	display: none;
+}
+
+.add-to-cart.added {
+	background-color: #28a745;
+	color: white;
+}
+
+.view-cart-btn {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 20px;
+	margin-top: 20px;
+	display: none;
+	text-align: center;
+}
+
+.view-cart-btn:hover {
+	background-color: #0069d9;
+}
+</style>
+<script src="cart-manager.js"></script>
+<script>
+	function toggleSection(sectionId, arrowElement) {
+		var section = document.getElementById(sectionId);
+		if (section.style.display === "none" || section.style.display === "") {
+			section.style.display = "block";
+			arrowElement.classList.add('active');
+		} else {
+			section.style.display = "none";
+			arrowElement.classList.remove('active');
+		}
+	}
+
+	// Initialize the page with sections hidden
+	document
+			.addEventListener(
+					"DOMContentLoaded",
+					function() {
+						document.getElementById("about-item-points").style.display = "none";
+						document.getElementById("ingredient-table-container").style.display = "none";
+
+						// Set up click handlers
+						document
+								.querySelector(".about-item-header")
+								.addEventListener(
+										"click",
+										function() {
+											var arrow = this
+													.querySelector('.dropdown-arrow');
+											toggleSection("about-item-points",
+													arrow);
+										});
+
+						document
+								.querySelector(".ingredient-header")
+								.addEventListener(
+										"click",
+										function() {
+											var arrow = this
+													.querySelector('.dropdown-arrow');
+											toggleSection(
+													"ingredient-table-container",
+													arrow);
+										});
+					});
+</script>
+
+</head>
+<body>
+	<div class="product-layout">
+		<div class="product-image">
+			<img
+				src="https://www.cerave.com/-/media/project/loreal/brand-sites/cerave/americas/us/skincare/cleansers/hydrating-facial-cleanser/photos/2022/700x700/cerave_daily_hydrating-cleanser_12oz_front-700x700-v2.jpg?rev=8dcf681b75c042deaaa0c6ea1581d4df"
+				alt="Cleanser">
+		</div>
+		<div class="product-details">
+			<div class="product-title">CeraVe Hydrating Cleanser For Normal
+				To Dry Skin (236ml) - Non-Foaming Face Wash with Hyaluronic Acid And
+				Ceramides | Non-Comedogenic, Non-Irritating And Fragrance-Free
+				Cleanser</div>
+			<div class="product-price">Rs.690</div>
+			<hr>
+			<div class="product-info">
+				<ul class="description-points">
+					<li><strong>Brand : </strong>CeraVe</li>
+					<li><strong>Item Weight : </strong>236 ml</li>
+					<li><strong>dimensions L x W x H : </strong>7.1 x 3.6 x 17.2
+						Centimeters</li>
+					<li><strong>Scent : </strong>Aloe Vera</li>
+					<li><strong>Age Range (Description) : </strong>Adult</li>
+					<li><strong>Skin Type : </strong>Dry</li>
+					<li><strong>Item Package Quantity : </strong>1</li>
+					<li><strong>Special Feature : </strong>Safe Ingredient</li>
+					<li><strong>Item Form :</strong>Gel</li>
+				</ul>
+			</div>
+			<hr>
+			<div class="product-description">
+				<div class="dropdown-header about-item-header">
+					<strong>About this item</strong> <span class="dropdown-arrow">▼</span>
+				</div>
+				<ul id="about-item-points" class="description-points">
+					<li>Developed with Dermatologists, it gently removes dirt, oil
+						and makeup without leaving the skin feeling tight or dry</li>
+					<li>Ceramides: Help restore and maintain the skin’s natural
+						barrier</li>
+					<li>Hyaluronic acid helps retain the skin’s natural moisture
+						while MVE Technology continuously releases moisturising
+						ingredients for all-day hydration</li>
+					<li>Refreshing non-foaming facewash suitable for normal to dry
+						skin</li>
+					<li>Non-comedogenic, non-irritating and fragrance-free</li>
+					<li>HOW TO USE: Wet skin lukewarm water. Message cleanser into
+						skin in a gentle, circular motion. Rinse.</li>
+
+				</ul>
+			</div>
+			<hr>
+			<div class="ingredients">
+				<div class="dropdown-header ingredient-header">
+					<span>Ingredient Analysis</span> <span class="dropdown-arrow">▼</span>
+				</div>
+				<div id="ingredient-table-container"
+					class="ingredient-table-container">
+					<table class="ingredient-table">
+						<thead>
+							<tr>
+								<th>Ingredient</th>
+								<th>Oily Skin</th>
+								<th>Dry Skin</th>
+								<th>Sensitive Skin</th>
+								<th>Acne-Prone Skin</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Ceramides (NP, AP, EOP)</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+							<tr>
+								<td>Glycerin</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+							<tr>
+								<td>Hyaluronic Acid</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+							<tr>
+								<td>Sodium Lauroyl Lactylate</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+							<tr>
+								<td>Sulfate-Free</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+							<tr>
+								<td>Non-Comedogenic</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+							<tr>
+								<td>Fragrance-Free</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+							<tr>
+								<td>Non-Foaming (Mild)</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="buttons">
+				<button class="add-to-cart" onclick="addToCart()">Add to
+					Cart</button>
+				<button class="buy-now" onclick="buynow()">Buy Now</button>
+
+			</div>
+			<a class="view-cart-btn" id="view-cart-btn" onclick="viewCart()">View
+				Cart</a>
+		</div>
+	</div>
+	<script>
+		const productData = {
+			id : 'CeraVe Hydrating Facial Cleanser - 263ml',
+			name : 'CeraVe Hydrating Facial Cleanser - 263ml',
+			price : 690,
+			image : 'https://www.cerave.com/-/media/project/loreal/brand-sites/cerave/americas/us/skincare/cleansers/hydrating-facial-cleanser/photos/2022/700x700/cerave_daily_hydrating-cleanser_12oz_front-700x700-v2.jpg?rev=8dcf681b75c042deaaa0c6ea1581d4df'
+		};
+
+		document.addEventListener('DOMContentLoaded', function() {
+			CartManager.init(productData.id);
+
+			document.querySelector('.add-to-cart').addEventListener('click',
+					function() {
+						CartManager.addToCart(productData);
+					});
+		});
+		document.addEventListener('DOMContentLoaded', function() {
+			CartManager.init(productData.id);
+
+			document.querySelector('.buy-now').addEventListener('click',
+					function() {
+						CartManager.addToCart(productData);
+					});
+		});
+		function buynow() {
+			window.location.href = "cart.html";
+		}
+
+		function viewCart() {
+			window.location.href = "cart.html";
+		}
+	</script>
+</body>
+</html>

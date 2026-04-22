@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Personalized Skincare Profile</title>
+<style>
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	background: linear-gradient(to right, #e0f7fa, #f9fbe7);
+	min-height: 100vh;
+}
+
+h2 {
+	color: #2c3e50;
+	text-align: center;
+}
+
+/* Error banner */
+#errorBanner {
+	display: none;
+	background: #fdecea;
+	color: #c0392b;
+	border: 1px solid #e74c3c;
+	border-radius: 6px;
+	padding: 12px 18px;
+	max-width: 700px;
+	margin: 0 auto 16px auto;
+	text-align: center;
+	font-weight: bold;
+}
+
+form {
+	background: white;
+	padding: 40px;
+	max-width: 700px;
+	margin: auto;
+	border-radius: 10px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+	display: block;
+	margin-top: 15px;
+	font-weight: bold;
+}
+
+input[type="text"], input[type="tel"], input[type="email"], select,
+	textarea {
+	width: 100%;
+	padding: 10px;
+	margin-top: 5px;
+	border-radius: 5px;
+	border: 1px solid #ccc;
+}
+
+.checkbox-group {
+	margin-top: 10px;
+}
+
+.checkbox-group label {
+	font-weight: normal;
+	display: block;
+	margin-left: 20px;
+}
+
+button {
+	margin-top: 20px;
+	padding: 10px 20px;
+	background-color: #27ae60;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	font-size: 16px;
+	cursor: pointer;
+}
+
+button:hover {
+	background-color: #219150;
+}
+
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+	padding: 12px 40px;
+	background-color: black;
+	color: white;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	box-sizing: border-box;
+}
+
+.navbar-left {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.icon {
+	width: 35px;
+	height: 35px;
+}
+
+.logo {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.menu {
+	display: flex;
+	align-items: center;
+}
+
+.menu a {
+	color: white;
+	text-decoration: none;
+	margin: 0 15px;
+	font-size: 18px;
+	transition: 0.3s;
+}
+
+.menu a:hover {
+	color: gray;
+}
+
+.dropdown {
+	position: relative;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #333;
+	min-width: 160px;
+	right: 0;
+	border-radius: 5px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	z-index: 10;
+}
+
+.dropdown-content a {
+	color: white;
+	padding: 10px 16px;
+	display: block;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.dropdown-content a:hover {
+	background-color: #555;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.section {
+	padding: 60px 30px;
+	text-align: center;
+}
+
+.skincare-title {
+	font-size: 3.5rem;
+	font-weight: bold;
+	background: black;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+
+	<!-- Navbar -->
+	<div class="navbar">
+		<div class="navbar-left">
+			<img src="Images/face-cream.png" alt="App Icon" class="icon">
+			<div class="logo">Radiant Skin</div>
+		</div>
+		<div class="menu">
+			<a href="products.html">Products</a> <a href="LoginPage.html">Login</a>
+			<div class="dropdown">
+				<a href="#dashboard">Dashboard</a>
+				<div class="dropdown-content">
+					<a href="Homepage.html">Home</a> <a href="Profile.html">Profile</a>
+					<a href="cart.html">My Cart</a> <a href="myorders.html">My
+						Orders</a>
+					<!-- UPDATED: logout now calls the servlet -->
+					<a href="logout">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<h2>Build Your Skincare Profile</h2>
+	<!-- Shows URL ?error=... messages from the servlet -->
+	<div id="errorBanner"></div>
+
+	<!--
+    action="submit-profile" → POST to ProfileServlet
+    The servlet reads userId from the HTTP session (set at login),
+    so there is NO need to pass userId in the form.
+  -->
+	<form action="submit-profile" method="POST">
+
+		<label for="name">Full Name:</label> <input type="text" id="name"
+			placeholder="Name" name="name" required /> <label for="phone">Phone
+			Number:</label> <input type="tel" id="phone" placeholder="Phone Number"
+			name="phone" required /> <label for="email">Email Address:</label> <input
+			type="email" id="email" placeholder="example@gmail.com" name="email"
+			required /> <label for="skinType">What is your skin type?</label> <select
+			id="skinType" name="skinType" required>
+			<option value="">-- Select --</option>
+			<option value="normal">Normal</option>
+			<option value="dry">Dry</option>
+			<option value="oily">Oily</option>
+			<option value="combination">Combination</option>
+			<option value="sensitive">Sensitive</option>
+		</select> <label>What are your top skin concerns?</label>
+		<div class="checkbox-group">
+			<label><input type="checkbox" name="skinConcerns[]"
+				value="acne" /> Acne</label> <label><input type="checkbox"
+				name="skinConcerns[]" value="dryness" /> Dryness</label> <label><input
+				type="checkbox" name="skinConcerns[]" value="wrinkles" />
+				Wrinkles/Fine Lines</label> <label><input type="checkbox"
+				name="skinConcerns[]" value="dark-spots" /> Dark Spots</label> <label><input
+				type="checkbox" name="skinConcerns[]" value="redness" />
+				Redness/Irritation</label> <label><input type="checkbox"
+				name="skinConcerns[]" value="uneven-tone" /> Uneven Skin Tone</label>
+		</div>
+
+		<label for="routine">Do you follow a skincare routine?</label> <select
+			id="routine" name="routine" required>
+			<option value="">-- Select --</option>
+			<option value="yes">Yes</option>
+			<option value="no">No</option>
+		</select> <label for="lifestyle">Describe your lifestyle (e.g.,
+			indoor/outdoor, stress, sleep):</label>
+		<textarea id="lifestyle" name="lifestyle" placeholder="Lifestyle"
+			rows="4"></textarea>
+
+		<label for="allergies">Any known skin allergies or product
+			sensitivities?</label>
+		<textarea id="allergies" name="allergies" placeholder="Skin Allergies"
+			rows="3"></textarea>
+
+		<label for="goals">What are your skincare goals?</label>
+		<textarea id="goals" name="goals" placeholder="Goals" rows="3"></textarea>
+
+		<div style="text-align: center;">
+			<button type="submit">Save Profile</button>
+		</div>
+	</form>
+
+	<script>
+		// Show ?error=... message from servlet redirect
+		const params = new URLSearchParams(window.location.search);
+		const errMsg = params.get("error");
+		if (errMsg) {
+			const banner = document.getElementById("errorBanner");
+			banner.textContent = errMsg;
+			banner.style.display = "block";
+		}
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Your Skin Type</title>
+<style>
+/* Global Styles */
+body {
+	font-family: 'Arial', sans-serif;
+	margin: 0;
+	padding: 0;
+	background: linear-gradient(to right, #e0f7fa, #f9fbe7);
+	min-height: 100vh;
+	color: #333;
+}
+
+/* Container Styling */
+.container {
+	max-width: 900px;
+	margin: 40px auto;
+	padding: 20px;
+	background-color: #ffffff;
+	border-radius: 12px;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title */
+h1 {
+	text-align: center;
+	font-size: 2.5em;
+	color: #4A4A4A;
+	margin-bottom: 30px;
+}
+
+h2 {
+	font-size: 1.8em;
+	color: #444;
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+/* Ordered List */
+ol {
+	padding-left: 20px;
+	margin-bottom: 20px;
+}
+
+ol li {
+	font-size: 1.1em;
+	margin-bottom: 10px;
+	line-height: 1.6;
+}
+
+/* Skin Type Box Styling */
+.skin-type {
+	background-color: #f9f9f9;
+	padding: 15px;
+	margin: 20px 0;
+	border-left: 5px solid #3C8DAD;
+	border-radius: 5px;
+}
+
+.skin-type h2 {
+	margin-top: 0;
+	color: #3C8DAD;
+}
+
+.skin-type p {
+	font-size: 1.1em;
+	color: #555;
+	line-height: 1.6;
+}
+
+/* Image Styling */
+img {
+	display: block;
+	margin: 20px auto;
+	max-width: 100%;
+	border-radius: 8px;
+	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Footer Styling (optional) */
+footer {
+	text-align: center;
+	margin-top: 40px;
+	color: #aaa;
+	font-size: 0.9em;
+}
+
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: 60px; 
+	padding : 2px 15px;
+	background-color: black;
+	color: white;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+	padding: 2px 15px;
+}
+
+.navbar-left {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.icon {
+	width: 35px;
+	height: 35px;
+}
+
+.logo {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.menu {
+	display: flex;
+	align-items: center;
+}
+
+.menu a {
+	color: white;
+	text-decoration: none;
+	margin: 0 15px;
+	font-size: 18px;
+	transition: 0.3s;
+}
+
+.menu a:hover {
+	color: gray;
+}
+
+.dropdown {
+	position: relative;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #333;
+	min-width: 160px;
+	right: 0;
+	border-radius: 5px;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+	z-index: 10;
+}
+
+.dropdown-content a {
+	color: white;
+	padding: 10px 16px;
+	display: block;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.dropdown-content a:hover {
+	background-color: #555;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.section {
+	padding: 60px 30px;
+	text-align: center;
+}
+
+.skincare-title {
+	font-size: 3.5rem;
+	font-weight: bold;
+	background: black;
+	background-clip: text;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	margin-bottom: 10px;
+}
+</style>
+</head>
+<body>
+	<!-- Navbar -->
+	<div class="navbar">
+		<div class="navbar-left">
+			<img src="Images/face-cream.png" alt="App Icon" class="icon">
+			<div class="logo">Radiant Skin</div>
+		</div>
+		<div class="menu">
+			<a href="products.html">Products</a> <a href="LoginPage.html">Login</a>
+			<div class="dropdown">
+				<a href="#dashboard">Dashboard</a>
+				<div class="dropdown-content">
+					<a href="Homepage.html">Home</a> <a href="Profile.html">Profile</a>
+					<a href="cart.html">My Cart</a> <a href="myorders.html">My
+						Orders</a>
+					<!-- UPDATED: logout now calls the servlet -->
+					<a href="logout">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<h1>How to Determine Your Skin Type</h1>
+
+		<ol>
+			<li>Wash your face with a gentle cleanser and remove any makeup.</li>
+			<li>Pat your face dry.</li>
+			<li>Wait about an hour without applying any skincare products.</li>
+			<li>Observe how your skin feels and looks.</li>
+			<li>Use a tissue to see if your skin is oily or combination.</li>
+		</ol>
+
+		<h2>Refer to the image below to determine your skin type:</h2>
+		<img src="Images/skintype.jpg" alt="Skin Type Guide">
+
+		<div class="skin-type">
+			<h2>Normal Skin</h2>
+			<p>This skin type is well-balanced and neither too dry nor too
+				oily. It has a smooth texture, small pores, and a healthy-looking
+				complexion.</p>
+		</div>
+		<div class="skin-type">
+			<h2>Dry Skin</h2>
+			<p>This skin type produces less sebum than others. Dry skin can
+				feel tight, dull, and scaly, and may itch, sting, or burn.</p>
+		</div>
+
+		<div class="skin-type">
+			<h2>Oily Skin</h2>
+			<p>This skin type produces too much sebum, leading to enlarged
+				pores, a shiny complexion, and redness.</p>
+		</div>
+
+		<div class="skin-type">
+			<h2>Combination Skin</h2>
+			<p>This skin type has oily areas and dry areas on different parts
+				of the face.</p>
+		</div>
+		<div class="skin-type">
+			<h2>Sensitive Skin</h2>
+			<p>This skin type becomes irritated or inflamed easily. People
+				with dry or oily skin can also have sensitive skin.</p>
+		</div>
+		<!-- Footer (optional) -->
+		<footer>
+			<p>© 2025 Your Skin Care Guide. All Rights Reserved.</p>
+		</footer>
+	</div>
+</body>
+</html>

@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Simple Cleanser</title>
+<style>
+* {
+	font-family: Arial, sans-serif;
+}
+
+body {
+	margin: 0;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+	background: linear-gradient(to right, #e0f7fa, #f9fbe7);
+	min-height: 100vh;
+}
+
+.product-layout {
+	display: flex;
+	width: 100%;
+	align-items: flex-start;
+	justify-content: center;
+	gap: 0px;
+}
+
+.product-image {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: left-top;
+	padding: 10px;
+}
+
+.product-image img {
+	width: 70%;
+	border-radius: 10px;
+}
+
+.product-details {
+	flex: 1;
+	text-align: left;
+	padding: 20px;
+	align-self: flex-start;
+}
+
+.product-title {
+	font-size: 22px;
+	font-weight: bold;
+	margin: 10px 0;
+}
+
+.product-description {
+	font-size: 14px;
+	line-height: 1.5;
+	color: #333;
+	margin: 15px 0;
+}
+
+.dropdown-header {
+	font-size: 16px;
+	margin-bottom: 10px;
+	font-weight: bold;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+}
+
+.dropdown-arrow {
+	margin-left: 8px;
+	font-size: 12px;
+	transition: transform 0.3s ease;
+}
+
+.dropdown-header.active .dropdown-arrow {
+	transform: rotate(180deg);
+}
+
+.description-points {
+	padding-left: 20px;
+	margin: 0;
+}
+
+.description-points li {
+	margin-bottom: 8px;
+	list-style-type: disc;
+}
+
+.ingredients {
+	margin-top: 15px;
+	font-size: 14px;
+	color: #000;
+}
+
+.ingredient-table-container {
+	display: none;
+	margin-top: 10px;
+}
+
+.ingredient-table {
+	width: 100%;
+	border-collapse: collapse;
+	background-color: white;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	margin: 10px 0;
+}
+
+.ingredient-table th {
+	background-color: #f2f2f2;
+	padding: 12px 15px;
+	text-align: left;
+	font-weight: bold;
+	border-bottom: 2px solid #ddd;
+	font-size: 14px;
+}
+
+.ingredient-table td {
+	padding: 10px 15px;
+	border-bottom: 1px solid #ddd;
+	font-size: 14px;
+}
+
+.ingredient-table tr:hover {
+	background-color: #f9f9f9;
+}
+
+.yes {
+	color: #28a745;
+	font-weight: bold;
+}
+
+.no {
+	color: #dc3545;
+	font-weight: bold;
+}
+
+.buttons {
+	margin-top: 15px;
+	display: flex;
+	gap: 10px;
+}
+
+.buttons button {
+	flex: 1;
+	padding: 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 16px;
+}
+
+.add-to-cart {
+	background-color: #ffcc00;
+	color: #000;
+}
+
+.buy-now {
+	background-color: #ff5733;
+	color: #fff;
+}
+
+.product-price {
+	color: #28a745;
+	font-size: 1.5em;
+	margin: 5px 0;
+}
+
+hr {
+	margin: 15px 0;
+	border: 0;
+	height: 1px;
+	background-color: #ddd;
+}
+
+.about-item-points {
+	display: none;
+}
+
+.add-to-cart.added {
+	background-color: #28a745;
+	color: white;
+}
+
+.view-cart-btn {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 5px;
+	border-radius: 5px;
+	cursor: pointer;
+	font-size: 20px;
+	margin-top: 20px;
+	display: none;
+	text-align: center;
+}
+
+.view-cart-btn:hover {
+	background-color: #0069d9;
+}
+</style>
+<script src="cart-manager.js"></script>
+<script>
+	function toggleSection(sectionId, arrowElement) {
+		var section = document.getElementById(sectionId);
+		if (section.style.display === "none" || section.style.display === "") {
+			section.style.display = "block";
+			arrowElement.classList.add('active');
+		} else {
+			section.style.display = "none";
+			arrowElement.classList.remove('active');
+		}
+	}
+
+	// Initialize the page with sections hidden
+	document
+			.addEventListener(
+					"DOMContentLoaded",
+					function() {
+						document.getElementById("about-item-points").style.display = "none";
+						document.getElementById("ingredient-table-container").style.display = "none";
+
+						// Set up click handlers
+						document
+								.querySelector(".about-item-header")
+								.addEventListener(
+										"click",
+										function() {
+											var arrow = this
+													.querySelector('.dropdown-arrow');
+											toggleSection("about-item-points",
+													arrow);
+										});
+
+						document
+								.querySelector(".ingredient-header")
+								.addEventListener(
+										"click",
+										function() {
+											var arrow = this
+													.querySelector('.dropdown-arrow');
+											toggleSection(
+													"ingredient-table-container",
+													arrow);
+										});
+					});
+</script>
+
+</head>
+<body>
+	<div class="product-layout">
+		<div class="product-image">
+			<img src="https://m.media-amazon.com/images/I/51lV2Pem64L.jpg"
+				alt="Cleanser">
+		</div>
+		<div class="product-details">
+			<div class="product-title">Simple Kind To Skin Refreshing Face
+				Wash 150 ml | 100% soap-free gentle cleanser for sensitive, dry &amp;
+				oily skin, for women &amp; men</div>
+			<div class="product-price">Rs.399</div>
+			<hr>
+			<div class="product-info">
+				<ul class="description-points">
+					<li><strong>Brand : </strong>Simple</li>
+					<li><strong>Item Weight : </strong>0.5 Grams</li>
+					<li><strong>dimensions L x W x H : </strong>10 x 10 x 5
+						Centimeters</li>
+					<li><strong>Scent : </strong>Unscented</li>
+					<li><strong>Age Range (Description) : </strong>Adult</li>
+					<li><strong>Skin Type : </strong>Sensitive, Dry, Normal</li>
+					<li><strong>Item Package Quantity : </strong>1</li>
+					<li><strong>Product Benefits : </strong>Hypoallergenic</li>
+					<li><strong>Special Feature : </strong>Hypoallerge, Cruelty
+						Free, Vegan</li>
+					<li><strong>Item Form :</strong>Gel</li>
+				</ul>
+			</div>
+			<hr>
+			<div class="product-description">
+				<div class="dropdown-header about-item-header">
+					<strong>About this item</strong> <span class="dropdown-arrow">▼</span>
+				</div>
+				<ul id="about-item-points" class="description-points">
+					<li>GENTLE CLEANSER: Simple Refreshing Facewash is a gentle
+						yet effective gel cleanser that thoroughly washes away make-up,
+						dirt and other impurities leaving your skin feeling clean, fresh
+						and revived. This brightening face wash is ideal for everyday use
+						as part of your skincare routine.</li>
+					<li>SKIN LOVING INGREDIENTS: Formulated with pure and gentle
+						ingredients, this Simple face wash for oily skin as well as dry
+						skin is enriched with pro-vitamin B5, vitamin E, and Pro Amino
+						Acids, that help to maintain skin's natural moisture balance and
+						leave your face feeling clean and refreshed.</li>
+					<li>HYDRATING, REFRESHING FORMULA: This Simple Face wash is
+						the best face wash for glowing skin. It is known to remove that
+						extra oil but it won't dry out your skin in fact it boosts
+						hydration levels and cleanses gently. Its gentle, soap-free
+						formula will make sure you don't dry out your skin.</li>
+					<li>NO HARSH CHEMICALS: This facewash does not contain any
+						colours, dyes, artificial perfume, harsh chemicals or irritants,
+						making it perfect even for sensitive skin. This Simple face wash
+						is dermatologically tested and approved, ophthalmologically
+						tested, hypoallergenic, and non-comedogenic.</li>
+					<li>NO IRRITATION: This Simple face wash contains Triple
+						Purified Water and vitamins to help replenish and nourish your
+						skin without irritation. The best face wash for oily skin as well
+						as dry skin, this Simple Refreshing facewash is gentle and mild,
+						and will not irritate your skin — especially sensitive skin.</li>
+					<li>SUITABLE FOR ALL SKIN TYPES: Known to be the right fit for
+						an acne-prone skin this Simple Refreshing Facewash is perfect for
+						sensitive skin. This brightening face wash is a perfect choice for
+						anyone who wants to keep their skin clean, fresh, and
+						healthy-looking.</li>
+				</ul>
+			</div>
+			<hr>
+			<div class="ingredients">
+				<div class="dropdown-header ingredient-header">
+					<span>Ingredient Analysis</span> <span class="dropdown-arrow">▼</span>
+				</div>
+				<div id="ingredient-table-container"
+					class="ingredient-table-container">
+					<table class="ingredient-table">
+						<thead>
+							<tr>
+								<th>Ingredient</th>
+								<th>Oily Skin</th>
+								<th>Dry Skin</th>
+								<th>Sensitive Skin</th>
+								<th>Acne-Prone Skin</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>Pro-Vitamin B5 (Panthenol)</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+							<tr>
+								<td>Glycerin</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+							<tr>
+								<td>Chamomile Extract</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+							<tr>
+								<td>Sodium Lauryl Glucose Carboxylate</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+							<tr>
+								<td>Sulfate-Free</td>
+								<td class="yes">No</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+								<td class="yes">Yes</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="buttons">
+				<button class="add-to-cart" onclick="addToCart()">Add to
+					Cart</button>
+				<button class="buy-now" onclick="buynow()">Buy Now</button>
+
+			</div>
+			<a class="view-cart-btn" id="view-cart-btn" onclick="viewCart()">View
+				Cart</a>
+		</div>
+	</div>
+	<script>
+		const productData = {
+			id : 'simple-facewash-150ml',
+			name : 'Simple Kind To Skin Refreshing Face Wash - 150 ml',
+			price : 399,
+			image : 'https://m.media-amazon.com/images/I/51lV2Pem64L.jpg'
+		};
+
+		document.addEventListener('DOMContentLoaded', function() {
+			CartManager.init(productData.id);
+
+			document.querySelector('.add-to-cart').addEventListener('click',
+					function() {
+						CartManager.addToCart(productData);
+					});
+		});
+
+		document.addEventListener('DOMContentLoaded', function() {
+			CartManager.init(productData.id);
+
+			document.querySelector('.buy-now').addEventListener('click',
+					function() {
+						CartManager.addToCart(productData);
+					});
+		});
+		function buynow() {
+			window.location.href = "cart.html";
+		}
+
+		function viewCart() {
+			window.location.href = "cart.html";
+		}
+	</script>
+</body>
+</html>

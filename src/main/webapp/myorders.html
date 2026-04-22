@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Orders</title>
+
+<style>
+* {
+	font-family: Arial;
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 20px;
+	background: azure;
+}
+
+.container {
+	max-width: 1000px;
+	margin: auto;
+	background: white;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+	font-size: 24px;
+	border-bottom: 1px solid #eee;
+	margin-bottom: 20px;
+}
+
+.order {
+	border-bottom: 1px solid #eee;
+	padding: 15px 0;
+}
+
+.status {
+	color: #28a745;
+	font-weight: bold;
+}
+
+a {
+	text-align: center;
+}
+</style>
+
+</head>
+
+<body>
+
+	<div id="mainContent">
+		<!-- <a href="#" onclick="loadMyOrders()">View Orders</a>
+    <div class="header">My Orders</div>
+   
+    <div id="orders"></div>-->
+	</div>
+
+
+	<script>
+function loadMyOrders() {
+    document.getElementById('mainContent').innerHTML = "Loading orders...";
+
+    fetch('myOrders')
+        .then(response => response.text())
+        .then(data => {
+            document.getElementById('mainContent').innerHTML = data;
+        })
+        .catch(error => {
+            console.error(error);
+            document.getElementById('mainContent').innerHTML = "Error loading orders";
+        });
+}
+
+// ✅ CALL FUNCTION AUTOMATICALLY
+window.onload = function () {
+    loadMyOrders();
+};
+</script>
+
+
+</body>
+</html>

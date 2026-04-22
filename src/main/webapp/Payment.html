@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Secure Payment - Radiant Skin</title>
+<link
+	href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+	rel="stylesheet">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+	--black: #000;
+	--white: #fff;
+	--azure: #f0ffff;
+	--green: #28a745;
+	--green-dark: #218838;
+	--pink: #C71585;
+	--red: #ff5733;
+	--border: #ddd;
+	--gray: #6c757d;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: 'Poppins', sans-serif;
+}
+
+/* ── NAVBAR ── */
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 30px;
+	background: var(--black);
+	color: var(--white);
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+.navbar-left {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.logo {
+	font-size: 22px;
+	font-weight: 700;
+	color: var(--white);
+	text-decoration: none;
+}
+
+.menu a {
+	color: var(--white);
+	text-decoration: none;
+	margin: 0 15px;
+	font-size: 16px;
+	transition: .3s;
+}
+
+.menu a:hover {
+	color: #aaa;
+}
+
+body {
+	background: var(--azure);
+	min-height: 100vh;
+}
+
+/* ── PAGE ── */
+.page-header {
+	background: var(--black);
+	color: var(--white);
+	padding: 36px 30px;
+	text-align: center;
+}
+
+.page-header h1 {
+	font-size: 2rem;
+	font-weight: 700;
+	letter-spacing: 1px;
+}
+
+.page-header p {
+	color: #aaa;
+	margin-top: 6px;
+}
+
+.payment-wrapper {
+	max-width: 960px;
+	margin: 30px auto;
+	padding: 0 20px 60px;
+	display: grid;
+	grid-template-columns: 1.4fr 1fr;
+	gap: 24px;
+}
+
+/* ── FORM CARD ── */
+.form-card {
+	background: var(--white);
+	border-radius: 16px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+	overflow: hidden;
+}
+
+.card-section {
+	padding: 24px;
+}
+
+.card-section+.card-section {
+	border-top: 1px solid var(--border);
+}
+
+.section-head {
+	font-size: 15px;
+	font-weight: 700;
+	color: var(--black);
+	margin-bottom: 18px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.section-head i {
+	color: var(--green);
+}
+
+.form-row {
+	margin-bottom: 16px;
+}
+
+.form-row label {
+	display: block;
+	font-size: 13px;
+	font-weight: 600;
+	color: #555;
+	margin-bottom: 5px;
+}
+
+.form-row input[type=text] {
+	width: 100%;
+	padding: 11px 14px;
+	border: 1.5px solid var(--border);
+	border-radius: 8px;
+	font-size: 14px;
+	transition: .3s;
+	outline: none;
+}
+
+.form-row input[type=text]:focus {
+	border-color: var(--black);
+}
+
+.half-row {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 12px;
+}
+
+/* payment options */
+.pay-opts {
+	display: flex;
+	gap: 16px;
+	margin-bottom: 18px;
+}
+
+.pay-opt {
+	flex: 1;
+	border: 2px solid var(--border);
+	border-radius: 10px;
+	padding: 14px;
+	cursor: pointer;
+	transition: .3s;
+	text-align: center;
+}
+
+.pay-opt:hover {
+	border-color: #999;
+}
+
+.pay-opt input {
+	display: none;
+}
+
+.pay-opt.active {
+	border-color: var(--black);
+	background: #f9f9f9;
+}
+
+.pay-opt-icon {
+	font-size: 1.5rem;
+	margin-bottom: 4px;
+}
+
+.pay-opt-label {
+	font-size: 13px;
+	font-weight: 600;
+	color: #333;
+}
+
+/* submit */
+.submit-btn {
+	width: 100%;
+	padding: 14px;
+	background: var(--green);
+	color: var(--white);
+	border: none;
+	border-radius: 10px;
+	font-size: 16px;
+	font-weight: 600;
+	cursor: pointer;
+	transition: .3s;
+	margin-top: 4px;
+}
+
+.submit-btn:hover {
+	background: var(--green-dark);
+}
+
+/* ── ORDER SUMMARY CARD ── */
+.summary-card {
+	background: var(--white);
+	border-radius: 16px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+	padding: 24px;
+	height: fit-content;
+	position: sticky;
+	top: 80px;
+}
+
+.summary-card h3 {
+	font-size: 16px;
+	font-weight: 700;
+	margin-bottom: 18px;
+	border-bottom: 1px solid var(--border);
+	padding-bottom: 12px;
+}
+
+.summary-item {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	margin-bottom: 14px;
+}
+
+.summary-img {
+	width: 56px;
+	height: 56px;
+	object-fit: cover;
+	border-radius: 8px;
+	border: 1px solid var(--border);
+	flex-shrink: 0;
+}
+
+.summary-name {
+	font-size: 13px;
+	font-weight: 600;
+	color: #222;
+	line-height: 1.4;
+}
+
+.summary-meta {
+	font-size: 12px;
+	color: var(--gray);
+}
+
+.summary-price {
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--green);
+	margin-left: auto;
+	flex-shrink: 0;
+}
+
+.summary-divider {
+	border: none;
+	border-top: 1px solid var(--border);
+	margin: 14px 0;
+}
+
+.summary-total-row {
+	display: flex;
+	justify-content: space-between;
+	font-size: 15px;
+	font-weight: 700;
+}
+
+.summary-total-row span:last-child {
+	color: var(--green);
+}
+
+.empty-cart-msg {
+	text-align: center;
+	color: var(--gray);
+	padding: 20px 0;
+	font-size: 14px;
+}
+
+/* error */
+.alert-error {
+	background: #ffe6e6;
+	color: #c0392b;
+	border: 1px solid #f5c6cb;
+	border-radius: 8px;
+	padding: 12px 16px;
+	margin-bottom: 16px;
+	font-size: 14px;
+	display: none;
+}
+
+@media ( max-width :720px) {
+	.payment-wrapper {
+		grid-template-columns: 1fr;
+	}
+	.summary-card {
+		position: static;
+	}
+}
+</style>
+</head>
+<body>
+
+	<!-- NAVBAR -->
+	<div class="navbar">
+		<div class="navbar-left">
+			<span style="font-size: 22px;">🌿</span> <a class="logo"
+				href="Homepage.html">Radiant Skin</a>
+		</div>
+		<div class="menu">
+			<a href="products.html">Products</a> <a href="cart.html">Cart</a> <a
+				href="myOrders">My Orders</a>
+		</div>
+	</div>
+
+	<!-- PAGE HEADER -->
+	<div class="page-header">
+		<h1>🔒 Secure Payment</h1>
+		<p>Your information is safe with us</p>
+	</div>
+
+	<div class="payment-wrapper">
+
+		<!-- LEFT: FORM -->
+		<div class="form-card">
+			<div id="alertBox" class="alert-error"></div>
+
+			<!-- ACTION = placeOrder servlet -->
+			<form id="paymentForm" action="placeOrder" method="post">
+				<!-- Hidden fields: cart data sent to servlet -->
+				<input type="hidden" id="cartJson" name="cartJson" value="">
+				<input type="hidden" id="totalAmount" name="totalAmount" value="">
+
+				<!-- BILLING -->
+				<div class="card-section">
+					<div class="section-head">
+						<i class="fas fa-map-marker-alt"></i> Billing Address
+					</div>
+					<div class="form-row">
+						<label>Full Name</label> <input type="text" name="firstname"
+							id="fname" placeholder="John Doe" required>
+					</div>
+					<div class="form-row">
+						<label>Email Address</label> <input type="text" name="email"
+							id="femail" placeholder="john@example.com" required>
+					</div>
+					<div class="form-row">
+						<label>Street Address</label> <input type="text" name="address"
+							id="fadr" placeholder="542 W. 15th Street" required>
+					</div>
+					<div class="half-row">
+						<div class="form-row">
+							<label>City</label> <input type="text" name="city" id="fcity"
+								placeholder="Hyderabad" required>
+						</div>
+						<div class="form-row">
+							<label>State</label> <input type="text" name="state" id="fstate"
+								placeholder="Telangana" required>
+						</div>
+					</div>
+					<div class="form-row">
+						<label>Pin Code</label> <input type="text" name="zip" id="fzip"
+							placeholder="500001" required>
+					</div>
+				</div>
+
+				<!-- PAYMENT MODE -->
+				<div class="card-section">
+					<div class="section-head">
+						<i class="fas fa-credit-card"></i> Payment Method
+					</div>
+					<div class="pay-opts">
+						<label class="pay-opt" id="cardOpt"
+							onclick="selectPay('credit-card',this)"> <input
+							type="radio" name="payment" value="credit-card" id="payCard">
+							<span class="pay-opt-icon">💳</span> <span class="pay-opt-label">Card</span>
+						</label> <label class="pay-opt" id="codOpt"
+							onclick="selectPay('cod',this)"> <input type="radio"
+							name="payment" value="cod" id="payCOD"> <span
+							class="pay-opt-icon">💵</span> <span class="pay-opt-label">Cash
+								on Delivery</span>
+						</label>
+					</div>
+
+					<!-- Card details -->
+					<div id="cardDetails">
+						<div class="form-row">
+							<label>Name on Card</label> <input type="text" name="cardname"
+								id="cname" placeholder="John M. Doe">
+						</div>
+						<div class="form-row">
+							<label>Card Number</label> <input type="text" name="cardnumber"
+								id="ccnum" placeholder="1111-2222-3333-4444">
+						</div>
+						<div class="half-row">
+							<div class="form-row">
+								<label>Exp Month</label> <input type="text" name="expmonth"
+									id="expmonth" placeholder="September">
+							</div>
+							<div class="form-row">
+								<label>Exp Year</label> <input type="text" name="expyear"
+									id="expyear" placeholder="2026">
+							</div>
+						</div>
+						<div class="form-row">
+							<label>CVV</label> <input type="text" name="cvv" id="cvv"
+								placeholder="352">
+						</div>
+					</div>
+				</div>
+
+				<!-- SUBMIT -->
+				<div class="card-section">
+					<button type="button" class="submit-btn" onclick="confirmOrder()">
+						Place Order &nbsp; 🛒</button>
+				</div>
+			</form>
+		</div>
+
+		<!-- RIGHT: ORDER SUMMARY -->
+		<div class="summary-card">
+			<h3>Order Summary</h3>
+			<div id="summaryItems">
+				<p class="empty-cart-msg">Your cart is empty.</p>
+			</div>
+			<hr class="summary-divider">
+			<div class="summary-total-row">
+				<span>Total</span> <span id="summaryTotal">₹0.00</span>
+			</div>
+		</div>
+
+	</div>
+	<!-- payment-wrapper -->
+
+	<script>
+// ── Load cart from localStorage and render summary ──────────────────────────
+let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+function renderSummary() {
+  const container = document.getElementById('summaryItems');
+  if (!cart.length) {
+    container.innerHTML = '<p class="empty-cart-msg">Your cart is empty.</p>';
+    document.getElementById('summaryTotal').textContent = '₹0.00';
+    document.getElementById('cartJson').value    = '[]';
+    document.getElementById('totalAmount').value = '0';
+    return;
+  }
+  let html = '';
+  let total = 0;
+  cart.forEach(item => {
+    const qty     = item.quantity || 1;
+    const itemTot = item.price * qty;
+    total += itemTot;
+    html += `
+      <div class="summary-item">
+        <img class="summary-img" src="${item.image||''}" alt="${item.name}"
+             onerror="this.src='https://via.placeholder.com/56?text=Prod'">
+        <div>
+          <div class="summary-name">${item.name}</div>
+          <div class="summary-meta">Qty: ${qty} × ₹${item.price.toFixed(2)}</div>
+        </div>
+        <div class="summary-price">₹${itemTot.toFixed(2)}</div>
+      </div>`;
+  });
+  container.innerHTML = html;
+  document.getElementById('summaryTotal').textContent = '₹' + total.toFixed(2);
+
+  // Pass cart JSON to hidden inputs for servlet
+  document.getElementById('cartJson').value    = JSON.stringify(cart);
+  document.getElementById('totalAmount').value = total.toFixed(2);
+}
+renderSummary();
+
+// ── Payment option toggle ────────────────────────────────────────────────────
+function selectPay(mode, el) {
+  document.querySelectorAll('.pay-opt').forEach(o => o.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById(mode === 'credit-card' ? 'payCard' : 'payCOD').checked = true;
+  document.getElementById('cardDetails').style.display = mode === 'credit-card' ? 'block' : 'none';
+}
+// Hide card details by default
+document.getElementById('cardDetails').style.display = 'none';
+
+// ── Show server error from URL ───────────────────────────────────────────────
+(function(){
+  const p = new URLSearchParams(window.location.search);
+  const e = p.get('error');
+  if (e) {
+    const b = document.getElementById('alertBox');
+    b.textContent = decodeURIComponent(e);
+    b.style.display = 'block';
+  }
+})();
+
+// ── Client-side validation before form submit ────────────────────────────────
+function confirmOrder() {
+  const show = msg => {
+    const b = document.getElementById('alertBox');
+    b.textContent = msg; b.style.display = 'block';
+    b.scrollIntoView({behavior:'smooth'});
+  };
+
+  if (!document.getElementById('fname').value.trim()  ||
+      !document.getElementById('femail').value.trim() ||
+      !document.getElementById('fadr').value.trim()   ||
+      !document.getElementById('fcity').value.trim()  ||
+      !document.getElementById('fstate').value.trim() ||
+      !document.getElementById('fzip').value.trim()) {
+    show('Please fill in all billing details.'); return;
+  }
+
+  const payCard = document.getElementById('payCard').checked;
+  const payCOD  = document.getElementById('payCOD').checked;
+  if (!payCard && !payCOD) { show('Please select a payment method.'); return; }
+
+  if (payCard) {
+    if (!document.getElementById('cname').value.trim()    ||
+        !document.getElementById('ccnum').value.trim()    ||
+        !document.getElementById('expmonth').value.trim() ||
+        !document.getElementById('expyear').value.trim()  ||
+        !document.getElementById('cvv').value.trim()) {
+      show('Please fill in all card details.'); return;
+    }
+  }
+
+  if (!cart.length) { show('Your cart is empty. Add products before checkout.'); return; }
+
+  document.getElementById('paymentForm').submit();
+}
+</script>
+</body>
+</html>
+

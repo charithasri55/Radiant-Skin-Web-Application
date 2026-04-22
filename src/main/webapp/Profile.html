@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Radiant Skin - Profile</title>
+  <style>
+    /*
+     * Minimal shell page — the real profile HTML is injected
+     * by SaveProfileServlet (GET /profile) into #profileContent.
+     * This keeps the loading spinner consistent.
+     */
+    body { margin: 0; font-family: Arial, sans-serif; background: #f0ffff; }
+
+    #loadingSpinner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 80vh;
+      color: #26a69a;
+      font-size: 18px;
+      gap: 16px;
+    }
+
+    .spinner {
+      width: 48px; height: 48px;
+      border: 5px solid #e0f2f1;
+      border-top-color: #26a69a;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+  <!--
+    The servlet (GET /profile) writes the entire page HTML
+    (navbar + profile cards OR empty-state) into this div.
+  -->
+  <div id="profileContent">
+    <div id="loadingSpinner">
+      <div class="spinner"></div>
+      <span>Loading your profile…</span>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * Fetch /profile (GET).
+     * - If the user is not logged in, the servlet redirects to LoginPage.html
+     *   (the browser follows automatically).
+     * - If logged in but no profile, the servlet returns the empty-state HTML.
+     * - If logged in with a profile, the servlet returns the full profile HTML.
+     *
+     * We use fetch() and inject the response as innerHTML, exactly like
+     * myorders.html does for GET /myOrders.
+     */
+    window.onload = function () {
+      fetch('profile')
+        .then(response => {
+          // If servlet redirected (login guard), follow the redirect
+          if (response.redirected) {
+            window.location.href = response.url;
+            return null;
+          }
+          return response.text();
+        })
+        .then(html => {
+          if (html) {
+            // Replace entire document with servlet-rendered page
+            document.open();
+            document.write(html);
+            document.close();
+          }
+        })
+        .catch(error => {
+          console.error('Profile load error:', error);
+          document.getElementById('profileContent').innerHTML =
+            "<p style='text-align:center;padding:40px;color:red;'>Error loading profile. Please try again.</p>";
+        });
+    };
+  </script>
+
+</body>
+</html>

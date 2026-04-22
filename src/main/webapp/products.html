@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Skincare Products</title>
+<style>
+body {
+	font-family: Arial, sans-serif;
+	background: linear-gradient(to right, #e0f7fa, #f9fbe7);
+	min-height: 100vh;
+	margin: 0;
+	padding: 0px;
+}
+
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	width: 90%;
+	margin-bottom: 20px;
+}
+
+.header h1 {
+	margin: 0;
+}
+
+.search-bar {
+	padding: 8px;
+	width: 300px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+}
+
+.products-container {
+	display: grid;
+	grid-template-columns: repeat(4, 1fr);
+	gap: 20px;
+	max-width: 1000px;
+	margin: auto;
+}
+
+.product-card {
+	background: white;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	padding: 20px;
+	text-align: center;
+	transition: transform 0.3s ease-in-out;
+}
+
+.product-card:hover {
+	transform: scale(1.05);
+}
+
+.product-image {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+	border-radius: 10px;
+}
+
+.product-name {
+	font-size: 1.2em;
+	margin: 10px 0;
+	font-weight: bold;
+}
+
+.product-price {
+	color: #28a745;
+	font-size: 1.1em;
+	margin: 5px 0;
+}
+
+.buy-button {
+	background: black;
+	color: white;
+	border: none;
+	padding: 10px;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 0.3s;
+}
+
+.buy-button:hover {
+	background: gray;
+}
+
+.navbar {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 20px;
+	background-color: black;
+	color: white;
+	width: 100%;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+.navbar-left {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.icon {
+	width: 35px;
+	height: 35px;
+}
+
+.logo {
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.menu {
+	display: flex;
+	align-items: center;
+}
+
+.menu a {
+	color: white;
+	text-decoration: none;
+	margin: 0 15px;
+	font-size: 18px;
+}
+
+.menu a:hover {
+	color: gray;
+}
+
+.dropdown {
+	position: relative;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: #333;
+	min-width: 160px;
+	right: 0;
+	border-radius: 5px;
+}
+
+.dropdown-content a {
+	color: white;
+	padding: 10px;
+	display: block;
+}
+
+.dropdown-content a:hover {
+	background-color: #555;
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
+
+.page-content {
+	width: 80%;
+	margin: 20px auto;
+}
+</style>
+</head>
+<body>
+	<!-- Navbar -->
+	<div class="navbar">
+		<div class="navbar-left">
+			<img src="Images/face-cream.png" alt="App Icon" class="icon">
+			<div class="logo">Radiant Skin</div>
+		</div>
+		<div class="menu">
+
+			<a href="LoginPage.html">Login</a>
+			<div class="dropdown">
+				<a href="#">Dashboard</a>
+				<div class="dropdown-content">
+					<a href="Homepage.html">Home</a> <a href="Profile.html">Profile</a>
+					<a href="cart.html">My Cart</a> <a href="myorders.html">My
+						Orders</a> <a href="logout">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="page-content">
+		<div class="header">
+			<h1>Products</h1>
+			<input type="text" class="search-bar" id="search"
+				placeholder="Search products..." onkeyup="filterProducts()">
+		</div>
+		<div class="products-container" id="productList">
+			<div class="product-card" onclick="cetaphil()">
+				<img src="Images/cetaphil_cleanser.jpg" alt="Cleanser"
+					class="product-image">
+				<div class="product-name">Cetaphil Gentle Skin Cleanser</div>
+				<div class="product-price">Rs.350</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card" onclick="simple()">
+				<img src="Images/simple_cleanser.jpg" alt="Cleanser"
+					class="product-image">
+				<div class="product-name">Simple Face Wash</div>
+				<div class="product-price">Rs.399</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card" onclick="minimalist()">
+				<img
+					src="https://images-static.nykaa.com/media/catalog/product/8/1/81fedc4MINIM00000019.jpeg"
+					alt="Cleanser" class="product-image">
+				<div class="product-name">Minimalist 2% Salicylic Acid + LHA
+					Cleanser</div>
+				<div class="product-price">Rs.299</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card" onclick="cerave()">
+				<img
+					src="https://www.cerave.com/-/media/project/loreal/brand-sites/cerave/americas/us/skincare/cleansers/hydrating-facial-cleanser/photos/2022/700x700/cerave_daily_hydrating-cleanser_12oz_front-700x700-v2.jpg?rev=8dcf681b75c042deaaa0c6ea1581d4df"
+					alt="Cleanser" class="product-image">
+				<div class="product-name">CeraVe Hydrating Facial Cleanser</div>
+				<div class="product-price">Rs.699</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card" onclick="deconstruct()">
+				<img src="https://m.media-amazon.com/images/I/410eexj-kZL.jpg"
+					alt="Cleanser" class="product-image">
+				<div class="product-name">Deconstruct Clearing Face Wash (2%
+					Salicylic Acid + 1% Zinc)</div>
+				<div class="product-price">Rs.263</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card" onclick="plum()">
+				<img src="https://m.media-amazon.com/images/I/41Kd0NkD3FL.jpg"
+					alt="Toner" class="product-image">
+				<div class="product-name">Plum Green Tea Face Toner</div>
+				<div class="product-price">Rs.420</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card" onclick="dot()">
+				<img
+					src="https://images-static.nykaa.com/media/catalog/product/c/a/ca542d5DOTKE00000147_googleq.jpg?tr=w-500"
+					alt="Toner" class="product-image">
+				<div class="product-name">Dot &amp; Key Watermelon Super Glow
+					Toner</div>
+				<div class="product-price">Rs.350</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card" onclick="aqua()">
+				<img src="https://m.media-amazon.com/images/I/61pZrPyAuLL.jpg"
+					alt="Toner" class="product-image">
+				<div class="product-name">Aqualogica Glow+ Hydrating Toner</div>
+				<div class="product-price">Rs.249</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img
+					src="https://www.mywishcare.com/cdn/shop/files/1_d91d49c2-77ce-48e6-82a8-7d8a3bbf5054.jpg?v=1706702481&width=1024"
+					alt="Toner" class="product-image">
+				<div class="product-name">Wishcare Hydrating Toner</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img src="https://m.media-amazon.com/images/I/61DAurbQboL.jpg"
+					alt="Toner" class="product-image">
+				<div class="product-name">Ordinary Glycolic Acid 7% Toning
+					Solution</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img
+					src="https://www.jiomart.com/images/product/original/1013407/pond-s-super-light-gel-hydrated-glow-hyaluronic-acid-and-vitamin-e-25ml-prod-1013407-1-202403012320.jpg?im=Resize=(600,600)"
+					alt="Moisturizer" class="product-image">
+				<div class="product-name">Ponds Super Light Gel Moisturizer</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img
+					src="https://static.beautytocare.com/cdn-cgi/image/f=auto/media/catalog/product/c/e/cetaphil-moisturizing-cream-dry-sensitive-skin-453g_5.jpg"
+					alt="Moisturizer" class="product-image">
+				<div class="product-name">Cetaphil Moisturizing Cream</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img src="https://m.media-amazon.com/images/I/6147cwOvHBL.jpg"
+					alt="Moisturizer" class="product-image">
+				<div class="product-name">CeraVe Moisturizing Cream</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img src="https://m.media-amazon.com/images/I/51dDuJdE4tL.jpg"
+					alt="Moisturizer" class="product-image">
+				<div class="product-name">Vaseline Light Hydrate Serum In
+					Lotion</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img src="https://m.media-amazon.com/images/I/51eGAdW-XKL.jpg"
+					alt="Moisturizer" class="product-image">
+				<div class="product-name">NIVEA Nourishing Body Milk</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img
+					src="https://www.jiomart.com/images/product/original/rvsztpqit7/dot-key-watermelon-superglow-matte-moisturizer-60ml-product-images-orvsztpqit7-p597759371-0-202301212238.jpg"
+					alt="Moistuerizer" class="product-image">
+				<div class="product-name">Dot &amp; Key Watermelon Super Glow
+					Gel Moisturizer</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img src="https://m.media-amazon.com/images/I/51zKLAHdEjL.jpg"
+					alt="Sunscreen" class="product-image">
+				<div class="product-name">Deconstruct Brightening Sunscreen
+					SPF 50</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img src="https://m.media-amazon.com/images/I/51o82C3AFGL.jpg"
+					alt="Sunscreen" class="product-image">
+				<div class="product-name">Dot &amp; Key Hydrating Sunscreen
+					SPF 50</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img
+					src="https://m.media-amazon.com/images/I/61L2zWl3PhL._AC_UF1000,1000_QL80_.jpg"
+					alt="Sunscreen" class="product-image">
+				<div class="product-name">Aqualogica Glow+ Dewy Sunscreen SPF
+					50</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img src="https://m.media-amazon.com/images/I/61KoZzDUCzL.jpg"
+					alt="Sunscreen" class="product-image">
+				<div class="product-name">Dr. Sheth’s Ceramide &amp; Vitamin C
+					Sunscreen SPF 50</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img src="https://m.media-amazon.com/images/I/51x3cj+-iUL.jpg"
+					alt="Sunscreen" class="product-image">
+				<div class="product-name">DermaCo Hyaluronic Sunscreen Aqua
+					Gel SPF 50</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+			<div class="product-card">
+				<img src="https://m.media-amazon.com/images/I/51liYV8g2DL.jpg"
+					alt="Sunscreen" class="product-image">
+				<div class="product-name">Minimalist SPF 50 Sunscreen with
+					Multi-Vitamins</div>
+				<div class="product-price">$20.99</div>
+				<button class="buy-button" onclick="buynow()">Buy Now</button>
+			</div>
+
+
+
+		</div>
+	</div>
+	<script>
+		function buynow() {
+			window.location.href = "Payment.html";
+		}
+
+		function filterProducts() {
+			let input = document.getElementById("search").value.toLowerCase();
+			let products = document.getElementsByClassName("product-card");
+
+			for (let i = 0; i < products.length; i++) {
+				let productName = products[i]
+						.getElementsByClassName("product-name")[0].innerText
+						.toLowerCase();
+				if (productName.includes(input)) {
+					products[i].style.display = "block";
+				} else {
+					products[i].style.display = "none";
+				}
+			}
+		}
+		function cetaphil() {
+			window.location.href = "cetaphilcleanser.html";
+		}
+		function simple() {
+			window.location.href = "Simplecleanser.html";
+		}
+		function minimalist() {
+			window.location.href = "minimalistcleanser.html";
+		}
+		function cerave() {
+			window.location.href = "CeraveCleanser.html";
+		}
+		function deconstruct() {
+			window.location.href = "DeconstructCleanser.html";
+		}
+		function plum() {
+			window.location.href = "PlumGreenTeaFaceToner.html";
+		}
+		function dot() {
+			window.location.href = "DotKeyWatermelon.html";
+		}
+		function aqua() {
+			window.location.href = "Aqualogica.html";
+		}
+	</script>
+</body>
+</html>
